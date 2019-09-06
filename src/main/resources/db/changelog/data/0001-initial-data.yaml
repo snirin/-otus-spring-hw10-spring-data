@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0001-authors
+      author: snirin
+      context: test
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/authors.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotChar: '"'
+        seperator: ';'
+        encoding: UTF-8
+        tableName: authors
+  - changeSet:
+      id: 0002-genres
+      author: snirin
+      context: test
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/genres.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotChar: '"'
+        seperator: ';'
+        encoding: UTF-8
+        tableName: genres
+  - changeSet:
+      id: 0003-books
+      author: snirin
+      context: test
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/books.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotChar: '"'
+        seperator: ';'
+        encoding: UTF-8
+        tableName: books
+  - changeSet:
+      id: 0004-comments
+      author: snirin
+      context: test
+      runOnChange: true
+      loadUpdateData:
+        primaryKey: id
+        file: data/comments.csv
+        relativeToChangelogFile: true
+        separator: ;
+        quotChar: '"'
+        seperator: ';'
+        encoding: UTF-8
+        tableName: comments

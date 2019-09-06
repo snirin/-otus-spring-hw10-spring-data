@@ -1,0 +1,31 @@
+databaseChangeLog:
+- changeSet:
+    id: 2019-09-05--0001--initial
+    author: snirin
+    createTable:
+      tableName: books
+      columns:
+        - column:
+            name: id
+            type: int
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: pk_book
+        - column:
+            name: name
+            type: varchar(150)
+        - column:
+            name: author_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_books_author
+              references: authors(id)
+        - column:
+            name: genre_id
+            type: int
+            constraints:
+              nullable: false
+              foreignKeyName: fk_books_genre
+              references: genres(id)
