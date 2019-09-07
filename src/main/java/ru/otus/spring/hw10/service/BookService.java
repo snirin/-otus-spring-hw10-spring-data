@@ -20,7 +20,7 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public boolean update(int id, String name, Integer authorId, Integer genreId) {
+    public boolean update(long id, String name, Long authorId, Long genreId) {
         Optional<Book> optional = bookRepository.findById(id);
         if (!optional.isPresent()) {
             return false;
@@ -44,24 +44,15 @@ public class BookService {
         return true;
     }
 
-    public boolean updateName(int id, String name) {
+    public boolean updateName(long id, String name) {
         return update(id, name, null, null);
     }
 
-    public boolean updateAuthor(int id, int authorId) {
+    public boolean updateAuthor(long id, long authorId) {
         return update(id, null, authorId, null);
     }
 
-    public boolean updateGenre(int id, int genreId) {
+    public boolean updateGenre(long id, long genreId) {
         return update(id, null, null, genreId);
-    }
-
-    //Вынесено в сервис для загрузки полей с ленивой инициализацией
-    public String findAllToString() {
-        return bookRepository.findAll().toString();
-    }
-
-    public String getToString(int id) {
-        return bookRepository.findById(id).map(Book::toString).orElse(null);
     }
 }

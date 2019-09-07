@@ -2,7 +2,6 @@ package ru.otus.spring.hw10.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,22 +22,37 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
-    public Book withId(int id) {
+    public Book withId(long id) {
         this.id = id;
+        return this;
+    }
+
+    public Book withName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public Book withAuthor(Author author) {
+        this.author = author;
+        return this;
+    }
+
+    public Book withGenre(Genre genre) {
+        this.genre = genre;
         return this;
     }
 }

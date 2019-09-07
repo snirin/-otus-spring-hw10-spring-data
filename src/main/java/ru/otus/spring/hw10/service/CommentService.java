@@ -18,7 +18,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public boolean update(int id, String text) {
+    public boolean update(long id, String text) {
         Optional<Comment> comment = commentRepository.findById(id);
         if (!comment.isPresent()) {
             return false;
