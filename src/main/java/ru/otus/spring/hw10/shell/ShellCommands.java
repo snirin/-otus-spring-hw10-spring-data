@@ -4,7 +4,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring.hw10.dao.AuthorRepository;
-import ru.otus.spring.hw10.dao.BookRepository;
 import ru.otus.spring.hw10.dao.CommentRepository;
 import ru.otus.spring.hw10.dao.GenreRepository;
 import ru.otus.spring.hw10.models.Author;
@@ -18,15 +17,14 @@ import ru.otus.spring.hw10.service.CommentService;
 public class ShellCommands {
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
-    private final BookRepository bookRepository;
     private final BookService bookService;
     private final CommentRepository commentRepository;
     private final CommentService commentService;
 
-    public ShellCommands(AuthorRepository authorRepository, GenreRepository genreRepository, BookRepository bookRepository, BookService bookService, CommentRepository commentRepository, CommentService commentService) {
+    public ShellCommands(AuthorRepository authorRepository, GenreRepository genreRepository, BookService bookService,
+                         CommentRepository commentRepository, CommentService commentService) {
         this.authorRepository = authorRepository;
         this.genreRepository = genreRepository;
-        this.bookRepository = bookRepository;
         this.bookService = bookService;
         this.commentRepository = commentRepository;
         this.commentService = commentService;
@@ -64,7 +62,7 @@ public class ShellCommands {
 
     @ShellMethod(value = "Author:Count", key = {"ac"})
     public long authorCount() {
-        return (long) authorRepository.count();
+        return authorRepository.count();
     }
     /*
     AUTHORS - END
@@ -102,7 +100,7 @@ public class ShellCommands {
 
     @ShellMethod(value = "Genre:Count", key = {"gc"})
     public long genreCount() {
-        return (long) genreRepository.count();
+        return genreRepository.count();
     }
     /*
     GENRES - END
@@ -114,7 +112,7 @@ public class ShellCommands {
      */
     @ShellMethod(value = "Book:Insert", key = {"bi"})
     public long bookInsert(@ShellOption String name, @ShellOption long authorId, @ShellOption long genreId) {
-        return bookRepository.save(new Book(0, name, new Author(authorId, ""), new Genre(genreId, ""))).getId();
+        return bookService.save(new Book(0, name, new Author(authorId, ""), new Genre(genreId, ""))).getId();
     }
 
     @ShellMethod(value = "Book:Update", key = {"bu"})
@@ -139,23 +137,22 @@ public class ShellCommands {
 
     @ShellMethod(value = "Book:Delete", key = {"bd"})
     public boolean bookDelete(@ShellOption long id) {
-        bookRepository.deleteById(id);
-        return true;
+        return bookService.deleteById(id);
     }
 
     @ShellMethod(value = "Book:Get", key = {"bg"})
     public String bookGet(@ShellOption long id) {
-        return bookRepository.findById(id).map(Book::toString).orElse("null");
+        return bookService.findById(id).map(Book::toString).orElse("null");
     }
 
     @ShellMethod(value = "Book:GetAll", key = {"bga"})
     public String bookGet() {
-        return bookRepository.findAll().toString();
+        return bookService.findAll().toString();
     }
 
     @ShellMethod(value = "Book:Count", key = {"bc"})
     public long bookCount() {
-        return bookRepository.count();
+        return bookService.count();
     }
     /*
     BOOKS - END

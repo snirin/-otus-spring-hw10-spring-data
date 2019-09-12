@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-@Import(CommentService.class)
+@Import(CommentServiceImpl.class)
 @DataJpaTest
 public class CommentServiceTest {
     private static final String AUTHOR_1 = "Author1";

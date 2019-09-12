@@ -2,21 +2,18 @@ package ru.otus.spring.hw10.dao;
 
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.spring.hw10.models.Author;
 import ru.otus.spring.hw10.models.Book;
 import ru.otus.spring.hw10.models.Comment;
 import ru.otus.spring.hw10.models.Genre;
 
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class CommentRepositoryTest {
     private static final String AUTHOR_1 = "Author1";
@@ -39,7 +36,7 @@ public class CommentRepositoryTest {
         em.clear();
 
         List<Comment> comments = commentRepository.findByBook_Id(book1.getId());
-        assertEquals(singletonList(comment), comments);
+        assertThat(comments).isEqualTo(singletonList(comment));
     }
 }
 

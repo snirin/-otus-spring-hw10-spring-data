@@ -78,6 +78,7 @@ databaseChangeLog:
                   nullable: false
                   foreignKeyName: fk_comments_book
                   references: books(id)
+                  onDelete: CASCADE
             - column:
                 name: text
                 type: varchar(1000)

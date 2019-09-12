@@ -1,58 +1,26 @@
 package ru.otus.spring.hw10.service;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.hw10.dao.BookRepository;
-import ru.otus.spring.hw10.models.Author;
 import ru.otus.spring.hw10.models.Book;
-import ru.otus.spring.hw10.models.Genre;
 
-@Service
-@Transactional
-public class BookService {
-    private final BookRepository bookRepository;
+public interface BookService {
+    boolean update(long id, String name, Long authorId, Long genreId);
 
-    @Autowired
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    boolean updateName(long id, String name);
 
-    public boolean update(long id, String name, Long authorId, Long genreId) {
-        Optional<Book> optional = bookRepository.findById(id);
-        if (!optional.isPresent()) {
-            return false;
-        }
+    boolean updateAuthor(long id, long authorId);
 
-        Book book = optional.get();
+    boolean updateGenre(long id, long genreId);
 
-        if (authorId != null) {
-            book.setAuthor(new Author().withId(authorId));
-        }
+    Book save(Book book);
 
-        if (genreId != null) {
-            book.setGenre(new Genre().withId(genreId));
-        }
+    boolean deleteById(long id);
 
-        if (name != null) {
-            book.setName(name);
-        }
+    Optional<Book> findById(long id);
 
-        bookRepository.save(book);
-        return true;
-    }
+    List<Book> findAll();
 
-    public boolean updateName(long id, String name) {
-        return update(id, name, null, null);
-    }
-
-    public boolean updateAuthor(long id, long authorId) {
-        return update(id, null, authorId, null);
-    }
-
-    public boolean updateGenre(long id, long genreId) {
-        return update(id, null, null, genreId);
-    }
+    long count();
 }
