@@ -3,13 +3,8 @@ package ru.otus.spring.hw10.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityGraph;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.hw10.dao.BookRepository;
 import ru.otus.spring.hw10.models.Author;
@@ -17,7 +12,7 @@ import ru.otus.spring.hw10.models.Book;
 import ru.otus.spring.hw10.models.Genre;
 
 @Transactional
-@Repository
+@Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
@@ -25,9 +20,6 @@ public class BookServiceImpl implements BookService {
     public BookServiceImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
-
-    @PersistenceContext
-    private EntityManager em;
 
     @Override
     public boolean update(long id, String name, Long authorId, Long genreId) {
@@ -76,6 +68,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean deleteById(long id) {
         bookRepository.deleteById(id);
+//        bookRepository.flush();
         return true;
     }
 
@@ -86,10 +79,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        EntityGraph<?> entityGraph = em.getEntityGraph("BooksWithAttributes");
-        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
-        query.setHint("javax.persistence.fetchgraph", entityGraph);
-        return query.getResultList();
+        return bookRepository.findAll();
     }
 
     @Override

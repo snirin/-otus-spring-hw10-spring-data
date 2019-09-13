@@ -114,6 +114,8 @@ public class BookServiceTest {
         em.detach(comment);
 
         bookService.deleteById(bookId);
+        em.flush();
+
         comment = em.find(Comment.class, commentId);
         assertThat(comment).isNull();
     }

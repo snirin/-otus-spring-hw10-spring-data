@@ -74,11 +74,14 @@ databaseChangeLog:
             - column:
                 name: b_id
                 type: int
-                constraints:
-                  nullable: false
-                  foreignKeyName: fk_comments_book
-                  references: books(id)
-                  onDelete: CASCADE
             - column:
                 name: text
                 type: varchar(1000)
+
+      - addForeignKeyConstraint:
+          baseColumnNames: b_id
+          baseTableName: comments
+          constraintName: fk_comments_book
+          onDelete: CASCADE
+          referencedColumnNames: id
+          referencedTableName: books
